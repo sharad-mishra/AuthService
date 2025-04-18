@@ -16,11 +16,11 @@ const prepareAndStartServer = () => {
     app.listen(PORT, async() => {
         console.log(`Server is running on PORT ${PORT}.`);
         
-        const service = new UserService();
-        const token = service.createToken({email : 'sharad.email.com',id:1});
-        // console.log(token);
-        const user = service.verifyToken(token);
-        console.log(user);
+        // const service = new UserService();
+        // const token = service.createToken({email : 'sharad.email.com',id:1});
+        // // console.log(token);
+        // const user = service.verifyToken(token);
+        // console.log(user);
     });
 }
 

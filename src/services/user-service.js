@@ -17,6 +17,25 @@ class UserService {
             throw error;
         }
     }
+
+    async signIn(email, plainPassword){
+        try{
+            const user = await this.userRepository.getByEmail(email);
+            if(!user){
+                throw {error : "User not found"};
+            }
+            const passwordMatch = this.checkPassword(plainPassword, user.password);
+            if(!passwordMatch){
+                throw {error : "Incorrect password"};
+            }
+            const newJWT = this.createToken({email : user.email, id: user.id});
+            return newJWT;
+        }catch(error){
+            console.log("Something went wrong in the service layer ...");
+            throw error;
+        }
+    }
+
     createToken(user){
         try{
             const token = jwt.sign({user}, JWT_KEY, {expiresIn: '1h'});
@@ -35,6 +54,9 @@ class UserService {
             throw error;
         }
     }
+
+
+
     checkPassword(userInputPlainPassword, encryptedPassword){
         try{
             return bcrypt.compareSync(userInputPlainPassword, encryptedPassword);

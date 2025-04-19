@@ -15,4 +15,18 @@ router.post(
     UserController.signIn
 );
 
+router.get(
+    '/isAuthenticated',
+    UserController.isAuthenticated
+)
+
+router.get('/dummy', (req, res) => {
+    return res.status(200).json({
+        success: true,
+        message: 'Dummy response',
+        data: {},
+        err: {}
+    });
+});
+
 module.exports = router;

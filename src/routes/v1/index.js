@@ -20,13 +20,10 @@ router.get(
     UserController.isAuthenticated
 )
 
-router.get('/dummy', (req, res) => {
-    return res.status(200).json({
-        success: true,
-        message: 'Dummy response',
-        data: {},
-        err: {}
-    });
-});
+router.get(
+    '/isAdmin',
+    AuthRequestValidators.validateIsAdminRequest,
+    UserController.isAdmin
+)
 
 module.exports = router;

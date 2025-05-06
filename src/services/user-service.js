@@ -20,14 +20,21 @@ class UserService {
 
     async signIn(email, plainPassword){
         try{
+            //fetch user from DB
             const user = await this.userRepository.getByEmail(email);
+            //check if user exists
             if(!user){
                 throw {error : "User not found"};
             }
+            //compare incoming plain password with encrypted password in DB
+            //if password does not match, throw error
             const passwordMatch = this.checkPassword(plainPassword, user.password);
             if(!passwordMatch){
+                console.log("Password does not match ...");
                 throw {error : "Incorrect password"};
             }
+            //create JWT token and send it back to the user
+            //if password matches, create JWT token and send it back to the user
             const newJWT = this.createToken({email : user.email, id: user.id});
             return newJWT;
         }catch(error){
@@ -38,7 +45,7 @@ class UserService {
 
     createToken(user){
         try{
-            const token = jwt.sign({user}, JWT_KEY, {expiresIn: '1h'});
+            const token = jwt.sign({user}, JWT_KEY, {expiresIn: '1d'});
             return token;
         }catch(error){
             console.log("Something went wrong in the service layer ...");

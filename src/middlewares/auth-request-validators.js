@@ -15,12 +15,13 @@ const validateIsAdminRequest = (req, res, next) => {
         return res.status(400).json({
             success: false,
             data: {},
-            message: 'User ID missing',
-            err: 'User ID missing in the request'
-        });
+            err: 'User id not given',
+            message: 'Something went wrong'
+        })
     }
     next();
 }
+
 module.exports = {
     validateUserAuth,
     validateIsAdminRequest
